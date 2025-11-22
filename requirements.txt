@@ -1,0 +1,17 @@
+# Dependencias para ejecutar el notebook localmente.
+# Nota: LaTeX (pdflatex) no se instala por pip; en Windows instala MiKTeX o TeX Live si necesitas compilar .tex
+
+numpy>=1.24
+medmnist==3.0.1
+scikit-learn
+matplotlib
+pillow
+tensorflow>=2.11,<3.0
+jupyter
+ipython
+notebook
+gradio>=3.0
+plotly>=5.0
+
+# Visualizaciones desde repositorios (instala vía pip desde git)
+visualkeras @ git+https://github.com/paulgavrikov/visualkeras.git
