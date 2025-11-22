@@ -40,8 +40,8 @@ Instalación (genérica)
 1. Clona este repositorio y sitúate en la carpeta del proyecto:
 
 ```bash
-git clone <https://github.com/GustavoAdolf11/UNMSM-MLBD-CelulasSanguineas.git>
-cd <CelulasSanguineas>
+git clone https://github.com/GustavoAdolf11/UNMSM-MLBD-CelulasSanguineas.git
+cd CelulasSanguineas
 ```
 
 2. Crea y activa un entorno virtual (elige la variante según tu OS):
@@ -127,41 +127,6 @@ Salida y modelos
 	- No añadir modelos pesados al repositorio si no es necesario.
 	- Si quieres versionar modelos, usa Git LFS y un `.gitattributes` con reglas para `model/*.keras` y `model/*.npy`.
 
-Smoke tests rápidos (no entrenan)
---------------------------------
-Comprueba que el servicio y el modelo funcionan sin ejecutar todo el entrenamiento:
-
-```bash
-python - <<'PY'
-from tensorflow.keras.models import load_model
-from medmnist import BloodMNIST
-import numpy as np
-
-# carga modelo (si existe)
-try:
-		m = load_model('model/bloodmnist_cnn.keras')
-except Exception as e:
-		print('Modelo no disponible:', e)
-		raise SystemExit(1)
-
-# carga una imagen de prueba
-ds = BloodMNIST(split='test', download=False)
-x = ds.imgs[0].astype('float32')/255.0
-pred = m.predict(x[np.newaxis, ...])
-print('Predicción (clase):', np.argmax(pred))
-PY
-```
-
-También puedes probar la función de servicio (si existe `model/servicio_predict.py`):
-
-```bash
-python - <<'PY'
-from model.servicio_predict import predict_from_test
-img, prob_dict, true_label, pred_label = predict_from_test(0)
-print('True:', true_label, 'Pred:', pred_label)
-PY
-```
-
 Reproducibilidad y versiones
 ----------------------------
 - Para reproducibilidad, fija versiones en `requirements.txt`. Ejemplo de `requirements-freeze.txt`:
@@ -194,12 +159,3 @@ Estructura del proyecto (importante)
 - `exportardatasetpng.py` — exporta el dataset a PNG y crea un ZIP (local).
 - `model/` — modelos y artefactos guardados.
 - `PlotNeuralNet/` — (opcional) carpeta clonada para generar `.tex` via `pycore.tikzeng`.
-
-Contribuir
-----------
-- Añade issues o pull requests con mejoras. Para cambios de código principales crea una rama por feature y abre PR contra `master`.
-- Si añades modelos de ejemplo utiliza Git LFS o proporciona enlaces de descarga en lugar de subir binarios al repo.
-
-Contacto
--------
-Si quieres que actualice las instrucciones para un sistema concreto (Windows/macOS/Linux) o que fije versiones en `requirements.txt`, dímelo y lo hago.
